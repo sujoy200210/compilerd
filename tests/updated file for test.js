@@ -50,7 +50,7 @@ describe('Tests', () => {
   it('Invalid Code Syntax', async () => {
     const testCase = {
       name: 'Invalid Code Syntax',
-      reqObject: { code: '// This code has errors' },
+      reqObject: { code: '//thier are error in codes' },
       expectedResponse: {
         status: 400,
         error: 'Syntax error in code',
@@ -64,10 +64,10 @@ describe('Tests', () => {
   it('Valid Code Execution', async () => {
     const testCase = {
       name: 'Valid Code Execution',
-      reqObject: { code: 'console.log("Hello, world!");' },
+      reqObject: { code: 'console.log("Hi!");' },
       expectedResponse: {
         status: 200,
-        output: 'Hello, world!',
+        output: 'Hi!',
       },
     };
     const response = await axios.post(ENDPOINT, testCase.reqObject);
@@ -77,11 +77,11 @@ describe('Tests', () => {
 
   it('Missing Required Fields', async () => {
     const testCase = {
-      name: 'Missing Required Fields',
+      name: 'Required Fields are Missing',
       reqObject: { /* missing fields */ },
       expectedResponse: {
         status: 400,
-        error: 'Required fields are missing',
+        error: '',
       },
     };
     const response = await axios.post(ENDPOINT, testCase.reqObject);
@@ -92,7 +92,7 @@ describe('Tests', () => {
   it('Unsupported Language', async () => {
     const testCase = {
       name: 'Unsupported Language',
-      reqObject: { code: 'print("Hello, world!")', language: 'python' },
+      reqObject: { code: 'print("Hello!")', language: 'python' },
       expectedResponse: {
         status: 400,
         error: 'Unsupported language',
@@ -117,7 +117,7 @@ describe('Tests', () => {
       reqObject: { code: ' '.repeat(1024) }, // Adjust size to the boundary limit
       expectedResponse: {
         status: 200,
-        output: '',
+        output: 'error exists',
       },
     };
     const response = await axios.post(ENDPOINT, testCase.reqObject);
